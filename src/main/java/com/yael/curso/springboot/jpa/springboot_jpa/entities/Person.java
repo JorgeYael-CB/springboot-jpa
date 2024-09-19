@@ -1,6 +1,7 @@
 package com.yael.curso.springboot.jpa.springboot_jpa.entities;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,9 +18,14 @@ public class Person {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String lastName;
+    private String lastname;
+
     @Column(name="programming_language")
     private String programmingLanguage;
+
+
+    @Embedded // es como aplicar herencia, puedes tener otra clase separada y te dara sus metodos
+    private Audit audit = new Audit();
 
 
     public Person(){} // utilizado por - jpa
@@ -27,9 +33,18 @@ public class Person {
     public Person(Long id, String name, String lastName, String programmingLanguage) {
         this.id = id;
         this.name = name;
-        this.lastName = lastName;
+        this.lastname = lastName;
         this.programmingLanguage = programmingLanguage;
     }
+
+    public Person(String name, String lastName) {
+        this.name = name;
+        this.lastname = lastName;
+    }
+
+
+
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -37,7 +52,7 @@ public class Person {
         this.name = name;
     }
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastname = lastName;
     }
     public void setProgrammingLanguage(String programmingLanguage) {
         this.programmingLanguage = programmingLanguage;
@@ -48,8 +63,8 @@ public class Person {
     public String getName() {
         return name;
     }
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
     public String getProgrammingLanguage() {
         return programmingLanguage;
@@ -57,6 +72,6 @@ public class Person {
 
     @Override
     public String toString(){
-        return "Perdon id=" + this.id + ", name=" + this.name + ", lastName=" + this.lastName+", language=" + this.programmingLanguage;
+        return "Person id=" + this.id + ", name=" + this.name + ", lastName=" + this.lastname+", language=" + this.programmingLanguage;
     }
 }
